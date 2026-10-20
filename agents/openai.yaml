@@ -1,0 +1,5 @@
+interface:
+  display_name: "Lọc CV theo ASK"
+  short_description: "Sàng lọc CV có bằng chứng, Excel và HTML"
+  brand_color: "#2F6A55"
+  default_prompt: "Dùng $agent-loc-cv để hỏi nguồn CV và tiêu chí ASK, sau đó tạo báo cáo Excel và HTML có điểm bằng chứng."
