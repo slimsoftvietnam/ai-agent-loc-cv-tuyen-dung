@@ -58,7 +58,8 @@ Bắt buộc có:
 
 - Tổng quan số CV, nguồn, số hồ sơ ưu tiên và tóm tắt kết quả kiểm tra độc lập.
 - Khối `<details>` thu gọn tên **“ASK là gì?”**; khi mở phải giải thích A, S, K, thang điểm, lưu ý “điểm bằng chứng” và rằng Thái độ không được chấm điểm.
-- Danh sách/card ứng viên chỉ hiển thị **điểm tổng /100** (K+S); không hiện điểm K/S hoặc độ bao phủ trên card. Có thể đặt chip điểm mạnh và mục cần xác minh ngắn gọn.
+- **Bố cục hai phần theo thứ tự:** (1) **Ứng viên ưu tiên**: đúng 3 thẻ có điểm cao nhất (thẻ đầu nền tối, nổi bật); (2) **Tất cả hồ sơ**: toàn bộ ứng viên **dạng bảng** (hạng, ứng viên, điểm /100 kèm thanh, mức bằng chứng, điểm mạnh, lưu ý), có lọc theo mức phù hợp, tìm kiếm và sắp xếp. Không liệt kê toàn bộ hồ sơ ở phần ưu tiên.
+- Thẻ ưu tiên và bảng chỉ hiển thị **điểm tổng /100** (K+S); không hiện điểm K/S hoặc độ bao phủ ngoài trang. Thẻ có chip điểm mạnh và dòng “Cần xác minh” ngắn gọn; thẻ hạng 3 mà điểm dưới 70 ghi rõ “Cần làm rõ trước”.
 - Bộ lọc hoặc sắp xếp theo mức phù hợp/điểm khi danh sách dài.
 - Bấm tên hoặc card ứng viên mở dialog/drawer chi tiết.
 - Chi tiết ứng viên chỉ có hai tab nhìn thấy được: **Tóm tắt** và **CV gốc**.
@@ -70,7 +71,9 @@ Bắt buộc có:
   - PDF: `<iframe>`/`<object>` và có nút mở file.
   - DOCX hoặc định dạng không preview được: nút mở/tải file; tạo preview PDF/ảnh nếu công cụ sẵn có.
 - Nút mở CV gốc ở tab mới.
-- Giữ giao diện gọn, tương phản tốt, màu nhất quán; card phân cấp rõ, huy hiệu thứ tự; có thể dùng card nổi bật cho ứng viên đứng đầu.
+- Phong cách “CV Radar”: nền kem, thanh header bo tròn, khối hero gradient xanh teal kèm vòng tròn số (ví dụ 3/8 ưu tiên xem kỹ), ô số liệu có viền trên màu xanh, khối “ASK là gì?” 3 cột, thẻ ưu tiên bo góc lớn (thẻ đầu nền tối, chữ vàng), bảng có header xanh đậm, hộp chi tiết có tab dạng viên thuốc. Giữ tương phản tốt, màu nhất quán, chữ nội dung ≥15–16px.
+- **Hai bản HTML:** `index.html` (ảnh CV tham chiếu `assets/cv/`, kèm ảnh nhúng dạng dự phòng khi mở trong khung xem trước không tải được tệp tương đối) và **bản tài liệu độc lập** `Bao_cao_loc_CV_<vi-tri>.html` nhúng toàn bộ ảnh CV bằng data URI, không cần thư mục `assets` hay máy chủ localhost để xem hoặc gửi email. Nút “Mở CV gốc ở tab mới” trong bản độc lập dùng blob URL (trình duyệt chặn mở data URI trực tiếp).
+- Trình duyệt tích hợp của Claude chỉ hiển thị tệp `file://` dưới dạng ảnh chụp tĩnh (mất ảnh tương đối, tệp lớn có thể không mở được): để xem trước đầy đủ, chạy máy chủ tĩnh cục bộ (ví dụ `python -m http.server`) qua cấu hình xem trước; bản giao cho người dùng vẫn là tệp HTML độc lập.
 - Chỉ hiển thị thông tin nghề nghiệp cần thiết; không đưa dữ liệu nhạy cảm vào thẻ tổng quan.
 
 Dùng đường dẫn tương đối vào `assets/cv/`, encode tên file đúng cách. Kiểm tra mọi candidate key khớp dữ liệu dialog, mọi file CV tồn tại và JavaScript không lỗi cú pháp.

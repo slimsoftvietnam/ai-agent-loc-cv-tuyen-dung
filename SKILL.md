@@ -68,7 +68,7 @@ Với **mỗi CV × mỗi tiêu chí K/S**:
 - Chọn mức bằng chứng 0–3 theo [references/ask-scoring.md](references/ask-scoring.md).
 - Nếu CV không có bằng chứng: ghi **“Không tìm thấy”** và chấm **0**. Không biến thành suy đoán tiêu cực.
 
-Với **Thái độ**: tuyệt đối không chấm điểm, không đưa vào điểm tổng, không xếp hạng theo Thái độ. Chỉ ghi (a) các dấu hiệu hành vi có trong CV kèm trích dẫn và vị trí, nếu có; (b) 2–4 câu hỏi phỏng vấn hành vi (STAR) để người tuyển dụng xác minh.
+Với **Thái độ**: tuyệt đối không chấm điểm, không đưa vào điểm tổng, không xếp hạng theo Thái độ. Chỉ ghi (a) các dấu hiệu hành vi có trong CV kèm trích dẫn và vị trí, nếu có; (b) **dấu hiệu ổn định công việc** trích từ mốc thời gian trong CV (số công ty, số tháng ở mỗi vị trí, khoảng trống): gắn nhãn khi có từ 2 vị trí dưới 6 tháng trong 3 năm gần nhất hoặc có vị trí dưới 3 tháng (ngưỡng mặc định, người dùng có thể đổi khi duyệt tiêu chí). Nhãn này chỉ là dữ kiện để hỏi lại, không suy ra thái độ vì CV không cho biết lý do (cắt giảm, hết hợp đồng, dự án ngắn hạn…); (c) 2–4 câu hỏi phỏng vấn hành vi (STAR) để người tuyển dụng xác minh, kèm câu hỏi về lý do rời vị trí ngắn hạn nếu có nhãn. Mọi dấu hiệu phải thuộc nhóm hành vi đã được duyệt ở Bước 2; dấu hiệu nằm ngoài nhóm đó sẽ bị Agent kiểm tra gắn *Sai ngữ cảnh*.
 
 Với mỗi ứng viên, tạo thêm câu hỏi làm rõ cho các khoảng trống K/S và số liệu cần xác minh.
 

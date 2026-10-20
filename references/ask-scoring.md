@@ -25,6 +25,8 @@ Trong `criteria.json`, Thái độ chỉ là danh sách **hành vi cần xác mi
 - **Câu hỏi phỏng vấn hành vi (STAR):** 2–4 câu để người tuyển dụng xác minh.
 - Không suy từ ảnh, sở thích, tính từ tự mô tả hoặc phong cách thiết kế CV.
 - Không đưa Thái độ vào điểm tổng, thứ hạng, màu mức phù hợp hay nhãn ưu tiên.
+- **Dấu hiệu ổn định công việc:** tính từ mốc thời gian trong CV (số tháng mỗi vị trí, tính bằng script). Nhãn mặc định: ≥2 vị trí dưới 6 tháng trong 3 năm gần nhất, hoặc có vị trí dưới 3 tháng. Đây chỉ là dữ kiện để đặt câu hỏi (“lý do rời vị trí ngắn hạn?”), không phải kết luận về thái độ; vẫn không chấm điểm. Người dùng có thể đổi ngưỡng khi duyệt tiêu chí.
+- Chỉ ghi dấu hiệu thuộc các nhóm hành vi đã duyệt (ví dụ giao tiếp/làm việc nhóm, tư duy phân tích, ổn định công việc). Thành tích chuyên môn không liên quan nhóm đó (ví dụ độ chính xác bảng lương, vệ sinh an toàn thực phẩm) không dùng làm dấu hiệu Thái độ.
 
 ## Mức bằng chứng (K và S)
 

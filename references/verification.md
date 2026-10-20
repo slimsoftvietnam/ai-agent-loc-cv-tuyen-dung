@@ -24,6 +24,8 @@ Với **mỗi** câu trích (điểm K/S và dấu hiệu Thái độ):
    - Trọng số trong báo cáo khớp `criteria.json`; tổng = 100; điểm tiêu chí có trích dẫn.
    - Nhận xét điểm mạnh/thiếu **không có bằng chứng** (khẳng định không kèm trích dẫn) → ghi là “Không có bằng chứng”.
    - Thái độ không bị chấm điểm hay dùng trong xếp hạng.
+   - Mỗi dấu hiệu Thái độ thuộc đúng nhóm hành vi đã duyệt trong `criteria.json` (kể cả nhóm “ổn định công việc”); nếu không thì gán *Sai ngữ cảnh*.
+   - Mức điểm có bị thổi phồng so với trích dẫn (ví dụ mức 3 khi không có số liệu, hoặc chiến lược nội dung bị tính là chiến lược marketing): ghi nhận xét, không tự sửa điểm.
    - Báo cáo không chứa tiêu chí hoặc suy luận từ thông tin nhạy cảm.
 4. Trả kết quả dạng JSON `verification.json`:
 
