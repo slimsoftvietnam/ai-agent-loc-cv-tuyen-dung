@@ -33,9 +33,9 @@ Không sửa hoặc đổi tên file nguồn. Sao chép CV cần dùng vào `ass
 
 ## Trích xuất
 
-- PDF có text: trích xuất text, giữ số trang cho bằng chứng khi có thể.
-- PDF scan/ảnh: đọc bằng OCR hoặc thị giác; đánh dấu đoạn không đọc chắc chắn.
-- DOCX: đọc cấu trúc văn bản; không làm mất bảng hoặc mốc thời gian.
+- PDF có text: trích xuất text, **luôn giữ số trang và tên mục** để làm vị trí trích dẫn.
+- PDF scan/ảnh chụp: bắt buộc OCR hoặc đọc bằng thị giác để chuyển thành văn bản; đánh dấu đoạn không đọc chắc chắn, không suy đoán.
+- DOCX: đọc cấu trúc văn bản (mục, bảng, mốc thời gian); ghi tên mục (và số trang nếu chuyển được sang PDF).
 - Nhiều file cùng ứng viên: gộp chỉ khi có bằng chứng rõ là cùng người; nếu không, giữ tách biệt.
 - File trùng nội dung: giữ một bản phân tích, ghi các tên nguồn trùng.
 
