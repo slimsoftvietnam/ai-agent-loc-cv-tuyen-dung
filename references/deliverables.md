@@ -1,94 +1,77 @@
 # Hợp đồng đầu ra
 
-Tạo một thư mục kết quả có cấu trúc tối thiểu:
+Báo cáo **bắt buộc** có đúng bố cục "CV Radar" dưới đây (không có phần A/Thái độ trong điểm). Không tự dựng giao diện khác: dùng `scripts/tao_bao_cao.py` với `assets/mau_bao_cao.html` và `assets/giao_dien.js`; nếu cần chỉnh, sửa mẫu rồi chạy lại script.
+
+Thư mục kết quả:
 
 ```text
 ket-qua-loc-cv-<vi-tri>-<yyyymmdd>/
-|-- Danh_gia_CV_<vi-tri>.xlsx
-|-- index.html
-|-- criteria.json          # bộ tiêu chí đã được người dùng duyệt
-|-- scores.json            # điểm, trích dẫn, vị trí (đầu vào của script và Agent 2)
-|-- tinh_diem.py           # script tính điểm (hoặc .js)
-|-- verification.json      # kết quả Agent kiểm tra thứ hai
-|-- email-nhap.md          # nháp email (chỉ khi người tuyển dụng yêu cầu)
+|-- index.html                      # báo cáo TỰ CHỨA (ảnh CV nhúng data URI)
+|-- Danh_gia_CV_<vi_tri>.xlsx       # 5 sheet
+|-- criteria.json                   # tiêu chí đã duyệt
+|-- scores.json                     # điểm, trích dẫn, vị trí (đầu vào của script và Agent 2)
+|-- tinh_diem.py                    # bản sao script tính điểm
+|-- ket_qua_tinh_diem.json          # điểm do script tính
+|-- verification_A.json ...         # kết quả từng Agent 2
+|-- verification.json               # gộp kết quả Agent 2
+|-- verification_nhan_xet.json      # nhận xét thêm của Agent 2 (điểm thổi phồng/bỏ sót)
+|-- tong_hop.json
+|-- anh_xa_cv.json                  # tên gốc -> tên lưu
+|-- email-nhap.md                   # chỉ khi người tuyển dụng yêu cầu
 `-- assets/
-    `-- cv/
-        `-- <cac-file-cv-goc>
+    |-- cv/        # CV gốc (bản sao)
+    `-- preview/   # ảnh xem trước
 ```
 
-Điểm tổng, điểm K, điểm S, độ bao phủ và thứ hạng trong Excel/HTML phải lấy từ kết quả của script, không nhập tay. Điểm **chỉ gồm K và S**; Thái độ không có điểm.
+Điểm tổng, điểm K, điểm S, độ bao phủ và thứ hạng trong Excel/HTML phải lấy từ `ket_qua_tinh_diem.json` (do script tính), không nhập tay. Điểm **chỉ gồm K và S**; Thái độ không có điểm.
+
+## Vì sao `index.html` phải tự chứa
+
+Trình duyệt tích hợp của **Claude Code** và **Codex** mở file cục bộ như một trang `data:` (ảnh chụp), nên:
+
+- ảnh tham chiếu `assets/cv/...` (đường dẫn tương đối) **không hiện**;
+- `localhost` có thể bị chặn hoặc không sẵn sàng;
+- mở data URI trực tiếp ở tab mới bị trình duyệt chặn.
+
+Do đó: nhúng mọi ảnh CV vào `index.html` dạng `data:image/jpeg;base64,...` (nén, rộng tối đa 1100 px, chất lượng ~80, tổng file thường 3–6 MB), và nút "Mở ảnh CV ở tab mới" dùng **blob URL** tạo từ data URI. Không tạo thêm bản HTML thứ hai không cần thiết. Font K2D tải từ Google Fonts, nếu offline sẽ tự dùng font hệ thống.
+
+## HTML — bố cục bắt buộc (thứ tự từ trên xuống)
+
+Phong cách "CV Radar": nền gradient xanh nhạt, header bo tròn có logo, khối hero gradient xanh đậm với vòng tròn số (ví dụ `3/11` ưu tiên xem kỹ), ô số liệu có viền trên màu xanh, thẻ ưu tiên bo góc lớn (thẻ đầu nền tối, số điểm vàng), bảng có header xanh đậm, hộp chi tiết có tab dạng viên thuốc. Font K2D, chữ nội dung ≥ 15–16 px. Ít chữ, ưu tiên quét nhanh.
+
+1. **Header** (`CV Radar` + vị trí · số hồ sơ · ngày) và **hero** (tiêu đề "Hồ sơ cần xem kỹ.", đoạn dẫn, vòng tròn `3/N`).
+2. **4 ô thống kê:** số CV đã đọc; số hồ sơ từ 70 điểm và đủ tiêu chí bắt buộc; trọng số K / S (ghi rõ A không chấm điểm); số câu trích Agent 2 xác nhận khớp và số mục cần rà soát.
+3. Khối **`<details>` "ASK là gì?"**: 3 cột A (không chấm điểm) · S · K + dòng giải thích thang 0–3, công thức, "điểm bằng chứng", giả định trọng số/X.
+4. **Ứng viên ưu tiên:** đúng 3 thẻ có điểm cao nhất (thẻ đầu nền tối). Mỗi thẻ: nhãn "Ưu tiên n", tên, chức danh, điểm `/100`, 3–4 chip điểm mạnh ngắn, dòng "Cần xác minh". Điểm dưới 70 thêm "Cần làm rõ trước". Chỉ hiện điểm tổng, không hiện K/S hay độ bao phủ ngoài thẻ.
+5. **Tất cả hồ sơ:** bộ lọc (Tất cả / Ưu tiên / Còn lại), nút sắp xếp theo điểm, bảng gồm Ứng viên · Điểm · S · K · Độ bao phủ · Mức bằng chứng (kèm "Thiếu bắt buộc: …") · Kiểm tra độc lập. Hàng có mục cần rà soát nền đỏ nhạt + nhãn chữ.
+6. **Hộp chi tiết** (click thẻ hoặc hàng), hai tab:
+   - **Tóm tắt:** 3 ô điểm (Tổng, S, K) + độ bao phủ; **radar theo từng tiêu chí K/S** (≥3 tiêu chí); tóm tắt, "điểm cần kiểm tra"; danh sách tiêu chí **Phù hợp** và **Chưa đủ bằng chứng**, mỗi tiêu chí có mức `n/3`, nhãn "Bắt buộc", nhận xét, các câu trích nguyên văn kèm vị trí và nhãn kiểm tra độc lập; khối **Thái độ** (dấu hiệu + ổn định công việc + câu hỏi STAR, không có điểm); câu hỏi cần làm rõ.
+   - **CV gốc:** ảnh lớn, giữ tỷ lệ, không cắt, cuộn trong hộp thoại; nút "Mở ảnh CV ở tab mới" (blob URL).
+7. **Footer:** nguồn CV và câu "Đánh giá hỗ trợ rà soát, không quyết định tuyển dụng".
+
+Câu trích bị Agent 2 gắn *Không tìm thấy* hoặc *Sai ngữ cảnh* hiển thị **đỏ kèm nhãn chữ** (không chỉ dựa vào màu); tiêu chí liên quan gắn "Cần rà soát". Chỉ hiển thị thông tin nghề nghiệp cần thiết; không đưa dữ liệu nhạy cảm vào thẻ tổng quan.
+
+## Checklist kiểm tra HTML (bắt buộc, trên trình duyệt thật)
+
+1. Khởi động máy chủ tĩnh chỉ để kiểm tra (ví dụ `python -m http.server <cổng>` trong thư mục kết quả) rồi mở `index.html` trong trình duyệt tích hợp. Không giao máy chủ này cho người dùng; bản giao là file tự chứa.
+2. Console **không có lỗi** (lỗi hay gặp: đặt tên biến trùng biến toàn cục như `top`, `name`, `status`; `node --check` không phát hiện được).
+3. Đủ 3 thẻ ưu tiên, số dòng bảng = số CV, vòng tròn và ô thống kê hiện đúng số (mảng rỗng trong JavaScript là `truthy`: dùng `.length`).
+4. Mở một ứng viên: tab Tóm tắt có radar và đủ tiêu chí; tab **CV gốc** có ảnh với `naturalWidth > 0`.
+5. Bộ lọc và sắp xếp hoạt động; ứng viên có mục đỏ hiển thị nhãn chữ.
+6. Nếu mở thẳng `file://` trong trình duyệt tích hợp, ảnh vẫn hiện (vì đã nhúng).
 
 ## Excel
 
-Dùng font dễ đọc, freeze header, wrap text và màu trạng thái nhất quán. Câu trích bị Agent 2 gắn *Không tìm thấy* hoặc *Sai ngữ cảnh* tô **đỏ** kèm nhãn chữ. Bắt buộc có:
+Font Arial, header xanh navy chữ trắng, freeze header, wrap text; trạng thái: **xanh** (Đáp ứng), **xanh dương** (Đáp ứng một phần), **đỏ nhạt** (Chưa đủ bằng chứng / Không đáp ứng), **vàng** (tiêu chí bắt buộc còn thiếu). Ô có câu trích bị Agent 2 gắn *Không tìm thấy*/*Sai ngữ cảnh* tô **đỏ** kèm nhãn chữ. Năm sheet:
 
-### Sheet `Tổng quan`
+1. **Tổng quan:** số CV, nguồn, phạm vi, tiêu chí ASK, lưu ý; bảng "Nhóm HR xem kỹ · Ứng viên · Lý do · Kiểm tra trước quyết định"; thang điểm 0–3; số liệu kiểm tra độc lập; các điểm Agent 2 đề nghị xem lại.
+2. **Ứng viên:** Hạng · Ứng viên · Điểm bằng chứng · Độ bao phủ · Điểm S · Điểm K · Mức bằng chứng · Tiêu chí bắt buộc còn thiếu · Kiểm tra độc lập · CV gốc (liên kết).
+3. **Ma trận đối chiếu:** mỗi hàng = ứng viên × tiêu chí: ID · ASK · Tiêu chí · Mức độ · Trọng số · Điểm 0–3 · Điểm quy đổi · Trạng thái · Bằng chứng nguyên văn · Nguồn CV (trang, mục) · Kiểm tra độc lập · Câu hỏi cần xác minh.
+4. **Thái độ:** dấu hiệu hành vi (kèm trích dẫn, vị trí, kiểm tra độc lập), dấu hiệu ổn định công việc, câu hỏi STAR. **Không có cột điểm.**
+5. **Hướng dẫn ASK:** A/S/K, thang 0–3, công thức, lý do không chấm Thái độ, giới hạn của đánh giá từ CV.
 
-- Số CV đã đọc, nguồn và phạm vi.
-- Tiêu chí/trọng số K và S đã duyệt.
-- Nhóm HR nên ưu tiên xem xét phỏng vấn, lý do và điểm cần xác minh.
-- Kết quả kiểm tra độc lập: số câu Khớp / Không tìm thấy / Sai ngữ cảnh.
-- Ghi rõ điểm là điểm bằng chứng K+S, không chấm Thái độ, không phải quyết định tuyển dụng.
-
-### Sheet `Ứng viên`
-
-Các cột tối thiểu:
-
-| Ứng viên | Điểm bằng chứng | Độ bao phủ | Điểm K | Điểm S | Mức phù hợp | Tiêu chí đáp ứng | Tiêu chí thiếu/không tìm thấy | Bằng chứng từ CV | Dấu hiệu Thái độ (không chấm điểm) | Câu hỏi cần xác minh | Kiểm tra độc lập | CV gốc |
-
-### Sheet `Ma trận ASK`
-
-Mỗi hàng là ứng viên × tiêu chí K/S: nhóm, bắt buộc/ưu tiên, trọng số, mức 0–3, trạng thái, **câu trích nguyên văn**, **vị trí (trang, mục)**, nguồn, trạng thái kiểm tra độc lập, câu hỏi xác minh. Điểm tổng dùng công thức hoặc giá trị lấy từ script; không hard-code ước lượng.
-
-### Sheet `Thái độ`
-
-Mỗi hàng là ứng viên: dấu hiệu hành vi trong CV (kèm trích dẫn + vị trí, hoặc “Không tìm thấy dấu hiệu”) và câu hỏi phỏng vấn hành vi STAR. **Không có cột điểm.**
-
-### Sheet `Hướng dẫn ASK`
-
-Giải thích A/S/K, thang 0–3, công thức, trọng số đã duyệt, lý do không chấm Thái độ và các giới hạn của đánh giá từ CV.
-
-Kiểm tra lỗi công thức, ô bị cắt và mọi liên kết nguồn trước khi xuất.
-
-## HTML
-
-Tạo trang responsive, font K2D, ít chữ và ưu tiên quét nhanh. Không phụ thuộc framework nếu không cần.
-
-Bắt buộc có:
-
-- Tổng quan số CV, nguồn, số hồ sơ ưu tiên và tóm tắt kết quả kiểm tra độc lập.
-- Khối `<details>` thu gọn tên **“ASK là gì?”**; khi mở phải giải thích A, S, K, thang điểm, lưu ý “điểm bằng chứng” và rằng Thái độ không được chấm điểm.
-- **Bố cục hai phần theo thứ tự:** (1) **Ứng viên ưu tiên**: đúng 3 thẻ có điểm cao nhất (thẻ đầu nền tối, nổi bật); (2) **Tất cả hồ sơ**: toàn bộ ứng viên **dạng bảng** (hạng, ứng viên, điểm /100 kèm thanh, mức bằng chứng, điểm mạnh, lưu ý), có lọc theo mức phù hợp, tìm kiếm và sắp xếp. Không liệt kê toàn bộ hồ sơ ở phần ưu tiên.
-- Thẻ ưu tiên và bảng chỉ hiển thị **điểm tổng /100** (K+S); không hiện điểm K/S hoặc độ bao phủ ngoài trang. Thẻ có chip điểm mạnh và dòng “Cần xác minh” ngắn gọn; thẻ hạng 3 mà điểm dưới 70 ghi rõ “Cần làm rõ trước”.
-- Bộ lọc hoặc sắp xếp theo mức phù hợp/điểm khi danh sách dài.
-- Bấm tên hoặc card ứng viên mở dialog/drawer chi tiết.
-- Chi tiết ứng viên chỉ có hai tab nhìn thấy được: **Tóm tắt** và **CV gốc**.
-  - **Tóm tắt:** điểm tổng, điểm K và S (biểu đồ gọn có nhãn/giá trị, ví dụ radar theo từng tiêu chí khi ≥3 tiêu chí, hoặc thanh ngang), điểm mạnh, phần còn thiếu/không tìm thấy, bằng chứng (trích dẫn + vị trí + nhãn kiểm tra độc lập), dấu hiệu Thái độ và câu hỏi phỏng vấn hành vi (không có điểm), câu hỏi cần làm rõ. Câu trích *Không tìm thấy* hoặc *Sai ngữ cảnh* hiển thị **đỏ** kèm nhãn chữ.
-  - Dùng khoảng cách thoải mái giữa các khối, chữ nhỉnh hơn cỡ chú thích, ưu tiên ít chữ.
-- Cỡ chữ nội dung thường khoảng 16px desktop, 15px màn hình nhỏ. Ảnh CV trong tab **CV gốc** hiển thị lớn, giữ tỷ lệ, không cắt; cho phép cuộn trong hộp thoại.
-- Tab **CV gốc**:
-  - Ảnh: `<img>`.
-  - PDF: `<iframe>`/`<object>` và có nút mở file.
-  - DOCX hoặc định dạng không preview được: nút mở/tải file; tạo preview PDF/ảnh nếu công cụ sẵn có.
-- Nút mở CV gốc ở tab mới.
-- Phong cách “CV Radar”: nền kem, thanh header bo tròn, khối hero gradient xanh teal kèm vòng tròn số (ví dụ 3/8 ưu tiên xem kỹ), ô số liệu có viền trên màu xanh, khối “ASK là gì?” 3 cột, thẻ ưu tiên bo góc lớn (thẻ đầu nền tối, chữ vàng), bảng có header xanh đậm, hộp chi tiết có tab dạng viên thuốc. Giữ tương phản tốt, màu nhất quán, chữ nội dung ≥15–16px.
-- **Hai bản HTML:** `index.html` (ảnh CV tham chiếu `assets/cv/`, kèm ảnh nhúng dạng dự phòng khi mở trong khung xem trước không tải được tệp tương đối) và **bản tài liệu độc lập** `Bao_cao_loc_CV_<vi-tri>.html` nhúng toàn bộ ảnh CV bằng data URI, không cần thư mục `assets` hay máy chủ localhost để xem hoặc gửi email. Nút “Mở CV gốc ở tab mới” trong bản độc lập dùng blob URL (trình duyệt chặn mở data URI trực tiếp).
-- Trình duyệt tích hợp của Claude chỉ hiển thị tệp `file://` dưới dạng ảnh chụp tĩnh (mất ảnh tương đối, tệp lớn có thể không mở được): để xem trước đầy đủ, chạy máy chủ tĩnh cục bộ (ví dụ `python -m http.server`) qua cấu hình xem trước; bản giao cho người dùng vẫn là tệp HTML độc lập.
-- Chỉ hiển thị thông tin nghề nghiệp cần thiết; không đưa dữ liệu nhạy cảm vào thẻ tổng quan.
-
-Dùng đường dẫn tương đối vào `assets/cv/`, encode tên file đúng cách. Kiểm tra mọi candidate key khớp dữ liệu dialog, mọi file CV tồn tại và JavaScript không lỗi cú pháp.
+Kiểm tra lỗi công thức, ô bị cắt và mọi liên kết trước khi xuất.
 
 ## Nháp email (khi người tuyển dụng yêu cầu)
 
 Soạn nháp email mời phỏng vấn hoặc cảm ơn vào `email-nhap.md`, chỉ cho ứng viên/nhóm do người tuyển dụng chọn. Không nêu điểm số, lý do loại hay thông tin nhạy cảm. Chỉ là nháp để duyệt; không gửi, không tạo draft trong hộp thư khi chưa được xác nhận rõ.
-
-## Bàn giao
-
-Nêu ngắn gọn:
-
-- Số CV đã xử lý và nguồn.
-- Bộ tiêu chí và trọng số đã duyệt.
-- Nhóm cần HR xem xét phỏng vấn.
-- Kết quả kiểm tra độc lập (Khớp / Không tìm thấy / Sai ngữ cảnh).
-- Đường dẫn Excel và HTML.
-- Các giới hạn hoặc file không đọc được.

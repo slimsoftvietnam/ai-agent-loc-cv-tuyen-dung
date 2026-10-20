@@ -1,5 +1,5 @@
 interface:
   display_name: "Lọc CV theo ASK"
-  short_description: "Sàng lọc CV theo ASK: duyệt tiêu chí, trích dẫn có kiểm tra độc lập, Excel và HTML"
+  short_description: "Sàng lọc CV theo ASK: duyệt tiêu chí, trích dẫn có kiểm tra độc lập, báo cáo HTML (xem được ảnh CV) và Excel"
   brand_color: "#2F6A55"
-  default_prompt: "Dùng $agent-loc-cv: hỏi nguồn CV và JD, đề xuất tiêu chí để tôi duyệt, chấm K/S có trích dẫn (không chấm Thái độ), kiểm tra độc lập rồi tạo báo cáo Excel và HTML."
+  default_prompt: "Dùng $agent-loc-cv: hỏi nguồn CV và JD, đề xuất tiêu chí để tôi duyệt, chấm K/S có trích dẫn (không chấm Thái độ), kiểm tra độc lập rồi tạo báo cáo HTML tự chứa (xem được ảnh CV trong trình duyệt) và Excel."

@@ -33,9 +33,12 @@ Không sửa hoặc đổi tên file nguồn. Sao chép CV cần dùng vào `ass
 
 ## Trích xuất
 
-- PDF có text: trích xuất text, **luôn giữ số trang và tên mục** để làm vị trí trích dẫn.
-- PDF scan/ảnh chụp: bắt buộc OCR hoặc đọc bằng thị giác để chuyển thành văn bản; đánh dấu đoạn không đọc chắc chắn, không suy đoán.
-- DOCX: đọc cấu trúc văn bản (mục, bảng, mốc thời gian); ghi tên mục (và số trang nếu chuyển được sang PDF).
+Dùng `scripts/chuan_bi_cv.py` để chuẩn bị (xem SKILL.md, Bước 3). Nó sao chép CV gốc vào `assets/cv/`, tạo ảnh xem trước `assets/preview/` và trích văn bản vào `.work/van-ban/`.
+
+- **Ảnh (JPG/PNG/WEBP):** bắt buộc đọc bằng thị giác (mở ảnh bằng công cụ đọc ảnh). Ảnh rất lớn: đọc bản `assets/preview/` nếu đủ rõ; nếu chữ nhỏ thì đọc bản gốc. Ghi vị trí dạng `ảnh k/n, tên mục`.
+- **PDF có text:** dùng văn bản trích (có số trang); PDF scan (script báo “không có text”): đọc ảnh xem trước từng trang bằng thị giác, đánh dấu đoạn không chắc.
+- **DOCX:** dùng văn bản trích (mục, bảng); nếu máy có LibreOffice, script tạo ảnh xem trước để báo cáo hiển thị CV gốc; nếu không, báo cáo chỉ có chỗ mở file.
 - Nhiều file cùng ứng viên: gộp chỉ khi có bằng chứng rõ là cùng người; nếu không, giữ tách biệt.
 - File trùng nội dung: giữ một bản phân tích, ghi các tên nguồn trùng.
-
+- Windows: luôn chạy Python với `-X utf8`; tên file tiếng Việt được chuẩn hóa thành tên an toàn, bảng ánh xạ ở `anh_xa_cv.json`.
+- Văn bản trích trong `.work/` chỉ dành cho Agent thứ nhất; **không đưa cho Agent kiểm tra**.

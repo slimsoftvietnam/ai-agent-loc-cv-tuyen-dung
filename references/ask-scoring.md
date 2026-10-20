@@ -71,3 +71,15 @@ Chỉ dùng khi người dùng không cung cấp ngưỡng:
 - Dưới 50: Bằng chứng còn hạn chế.
 
 Đây là nhãn hỗ trợ ưu tiên rà soát, không phải quyết định tuyển/loại. Một tiêu chí bắt buộc có trạng thái `Không đáp ứng` hoặc `Không tìm thấy` phải hiển thị nổi bật dù tổng điểm cao.
+
+## Quy tắc nhất quán khi chấm (rút từ các lần kiểm tra độc lập)
+
+- **Mức 3 cần số liệu hoặc lặp ở từ 2 vai trò trở lên.** Nếu tiêu chí yêu cầu “kèm số liệu/kết quả” mà CV chỉ nêu nền tảng và việc làm, không có con số, chấm tối đa mức 2 (trừ khi lặp ở nhiều vai trò và có chứng chỉ/kết quả hỗ trợ; khi đó ghi rõ lý do trong `nhan_xet`).
+- **Bằng chứng phải thuộc đúng lĩnh vực của tiêu chí.** Hoạt động bán hàng (gọi điện, gửi email chào hàng, báo cáo doanh số) không phải marketing; viết HTML/CSS không phải viết nội dung; kỹ năng dựng video cơ bản không phải phối hợp content. Nếu chỉ có bằng chứng ngoài lĩnh vực thì chấm 0 (Không tìm thấy) hoặc tối đa 1 và nói rõ là gián tiếp. Áp dụng **cùng một tiêu chuẩn** cho mọi ứng viên.
+- **Không dùng lặp một câu để nâng điểm nhiều tiêu chí.** Một câu có thể làm chứng cho nhiều tiêu chí chỉ khi nội dung câu thật sự đáp ứng từng tiêu chí; nếu không, chỉ tính cho tiêu chí khớp nhất và ghi rõ.
+- **Vị trí tương đương** (ví dụ Content/Truyền thông so với Digital Marketing): mức tiêu chí số năm kinh nghiệm tối đa 2; ghi lưu ý cần xác nhận mức tương đương.
+- **Ngân sách/số liệu tiền:** “quản lý ngân sách” không kèm số tiền chỉ đạt mức 2 cho tiêu chí yêu cầu “có số tiền cụ thể”; ngân sách vận hành khác lĩnh vực (nhà hàng, kế toán) không tính.
+- **Tiêu chí về bằng cấp:** chuyên ngành thuộc lĩnh vực khác ghi `Không đáp ứng` (mức 0, kèm trích dẫn chuyên ngành); CV không có mục học vấn ghi `Không tìm thấy` — hai trường hợp khác nhau, đừng gộp.
+- **Dấu hiệu Thái độ** phải **thể hiện hành vi** (chủ động đề xuất, chịu trách nhiệm kết quả, phối hợp…); một câu chỉ mô tả đầu việc (“Lên ý tưởng tổ chức sự kiện”) không đủ làm dấu hiệu “chủ động và chịu trách nhiệm kết quả”. Thiếu dấu hiệu thì ghi “Không tìm thấy dấu hiệu”, đó không phải kết luận tiêu cực.
+- **Hồ sơ nghi trùng nội dung** (cùng công ty, cùng mô tả giữa các ứng viên khác tên): vẫn chấm riêng từng hồ sơ, đừng gộp; ghi vào `luu_y` để người tuyển dụng xác minh nguồn gốc.
+
